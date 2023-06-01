@@ -11,8 +11,8 @@ jobs:
       - name: Install Allure
         run: |
           curl -o allure-2.22.1.tgz -OLs https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.22.1/allure-commandline-2.22.1.tgz
-          sudo tar -zxvf allure-2.22.1.tgz -C ./temp/
-          sudo ln -s ./temp/allure-2.22.1/bin/allure ./allure
+          sudo tar -zxvf allure-2.22.1.tgz -C .
+          sudo ln -s ./allure-2.22.1/bin/allure ./allure
           ls -la
           ./allure --version
           allure --version
