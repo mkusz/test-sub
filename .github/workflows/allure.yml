@@ -20,7 +20,7 @@ jobs:
           packages: allure
           version: 'ubuntu'
       - name: Get Allure reports history
-        run: cp -R ./docs/history/ ./allure/history 2>/dev/null
+        run: cp -R ./docs/history/ ./allure/history || :
       - name: Build Allure reports
         run: allure generate ./allure -o ./doc
       - name: Commit static site to repository with GitHub Pages enabled
