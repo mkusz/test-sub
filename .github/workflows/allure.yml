@@ -36,7 +36,19 @@ jobs:
           ls -la
           ls -la ./report
           ls -la ./docs
-          
+      
+      - name: Commit static site to repository with GitHub Pages enabled
+        uses: cpina/github-action-push-to-another-repository@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.API_TESTEREMBYC_PL_DEPLOY_TOKEN }}
+        with:
+          user-name: mkusz
+          user-email: 9740637+mkusz@users.noreply.github.com
+          source-directory: docs
+          destination-github-username: mkusz
+          destination-repository-name: test-sub
+          target-branch: report
+      
 #       - name: Allure Report action from marketplace
 #         uses: simple-elf/allure-report-action@master
 #         if: always()
