@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install Allure
-        run: apt-add-repository ppa:qameta/allure && apt-get update && apt-get install -y allure
+        run: sudo apt-add-repository ppa:qameta/allure && sudo apt-get update && sudo apt-get install -y allure
       - name: Checkout git repository
         uses: actions/checkout@v3
       - name: Get Allure history
