@@ -1,1 +1,1 @@
-{"uid":"83edc06c07f9ae9e47eb6dd1b683e4e2","children":[],"name":"packages"}
+{"uid":"83edc06c07f9ae9e47eb6dd1b683e4e2","children":[{"name":"tests.trajector.test_manual","children":[{"name":"Logout","uid":"75540976df9bcea","parentUid":"aa2f4edeb0af719947b61099c268d9ed","status":"failed","time":{"start":1685630723970,"stop":1685630734734,"duration":10764},"flaky":false,"newFailed":false,"newPassed":false,"newBroken":false,"retriesCount":1,"retriesStatusChange":false,"parameters":[],"tags":["logout","manual"]}],"uid":"tests.trajector.test_manual"}],"name":"packages"}
