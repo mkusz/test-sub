@@ -26,10 +26,10 @@ jobs:
           ref: report
           path: docs
       - name: Get Allure reports history
-        run: cp -R ./docs/history/ ./report/allure/history || echo
+        run: cp -R ./docs/history/ ./report/history || echo
       
       - name: Build Allure reports
-        run: ./allure generate ./report/allure -o ./docs --clean
+        run: ./allure generate ./report -o ./docs --clean
       
       - name: List files
         run: |
