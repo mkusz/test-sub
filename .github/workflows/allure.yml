@@ -12,9 +12,9 @@ jobs:
         run: |
           curl -o allure-2.22.1.tgz -OLs https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.13.8/allure-commandline-2.13.8.tgz
           sudo tar -zxvf allure-2.22.1.tgz -C /opt/
-          sudo ln -s /opt/allure-2.22.1/bin/allure ./allure
+          sudo ln -s /opt/allure-2.22.1/bin/allure ./allure-cli
           ls -la
-          ./allure --version
+          allure-cli --version
       - name: Checkout git repository
         uses: actions/checkout@v3
       - name: Get Allure history
