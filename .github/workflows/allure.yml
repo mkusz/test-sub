@@ -35,6 +35,7 @@ jobs:
         run: |
           ls -la
           ls -la ./report
+          ls -la ./report/history
           ls -la ./docs
       
       - name: Commit static site to repository with GitHub Pages enabled
@@ -49,16 +50,6 @@ jobs:
           destination-repository-name: test-sub
           target-branch: report
       
-#       - name: Allure Report action from marketplace
-#         uses: simple-elf/allure-report-action@master
-#         if: always()
-#         #id: allure-report
-#         with:
-#           allure_results: allure
-#           gh_pages: docs
-#           allure_report: report
-#           allure_history: history
-#           keep_reports: 100
 #       - name: Deploy report to Github Pages
 #         if: always()
 #         uses: peaceiris/actions-gh-pages@v2
@@ -75,20 +66,4 @@ jobs:
 #             state: 'success'
 #             sha: ${{ github.event.pull_request.head.sha }}
 #             target_url: github.com/mkusz/test-sub/${{ github.run_number }}
-      
-#       - name: Get Allure reports history
-#         run: cp -R ./docs/history/ ./allure/history || echo
-#       - name: Build Allure reports
-#         run: allure generate ./allure -o ./doc
-#       - name: Commit static site to repository with GitHub Pages enabled
-#         uses: cpina/github-action-push-to-another-repository@main
-#         env:
-#           API_TOKEN_GITHUB: ${{ secrets.API_TESTEREMBYC_PL_DEPLOY_TOKEN }}
-#         with:
-#           user-name: mkusz
-#           user-email: 9740637+mkusz@users.noreply.github.com
-#           source-directory: docs
-#           target_directory: docs
-#           destination-github-username: mkusz
-#           destination-repository-name: test-sub
-#           target-branch: report
+    
