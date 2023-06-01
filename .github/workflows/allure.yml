@@ -16,15 +16,17 @@ jobs:
           ./allure --version
       - name: Checkout git repository
         uses: actions/checkout@v3
+        with:
+          path: report
       - name: Get Allure history
         uses: actions/checkout@v3
         if: always()
         continue-on-error: true
         with:
           ref: report
-          path: _allure_old
+          path: docs
       - name: Get Allure reports history
-        run: cp -R ./docs/history/ ./allure/history || echo
+        run: cp -R ./docs/history/ ./report/allure/history || echo
       - name: List files
         run: ls -la
         
