@@ -27,6 +27,10 @@ jobs:
           path: docs
       - name: Get Allure reports history
         run: cp -R ./docs/history/ ./report/allure/history || echo
+      
+      - name: Build Allure reports
+        run: ./allure generate ./report/allure -o ./docs --clean
+      
       - name: List files
         run: |
           ls -la
@@ -60,11 +64,6 @@ jobs:
 #             sha: ${{ github.event.pull_request.head.sha }}
 #             target_url: github.com/mkusz/test-sub/${{ github.run_number }}
       
-#       - name: Install additional Ubuntu packages
-#         uses: awalsh128/cache-apt-pkgs-action@latest
-#         with:
-#           packages: allure
-#           version: 'ubuntu'
 #       - name: Get Allure reports history
 #         run: cp -R ./docs/history/ ./allure/history || echo
 #       - name: Build Allure reports
