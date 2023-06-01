@@ -28,8 +28,11 @@ jobs:
       - name: Get Allure reports history
         run: cp -R ./docs/history/ ./report/allure/history || echo
       - name: List files
-        run: ls -la
-        
+        run: |
+          ls -la
+          ls -la ./report
+          ls -la ./docs
+          
 #       - name: Allure Report action from marketplace
 #         uses: simple-elf/allure-report-action@master
 #         if: always()
