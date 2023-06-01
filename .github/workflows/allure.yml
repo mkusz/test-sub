@@ -13,9 +13,7 @@ jobs:
           curl -o allure-2.22.1.tgz -OLs https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.22.1/allure-commandline-2.22.1.tgz
           sudo tar -zxvf allure-2.22.1.tgz -C .
           sudo ln -s ./allure-2.22.1/bin/allure ./allure
-          ls -la
           ./allure --version
-          allure --version
       - name: Checkout git repository
         uses: actions/checkout@v3
       - name: Get Allure history
@@ -27,6 +25,8 @@ jobs:
           path: _allure_old
       - name: Get Allure reports history
         run: cp -R ./docs/history/ ./allure/history || echo
+      - name: List files
+        run: ls -la
         
 #       - name: Allure Report action from marketplace
 #         uses: simple-elf/allure-report-action@master
