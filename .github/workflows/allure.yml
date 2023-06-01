@@ -11,10 +11,10 @@ jobs:
       - name: Install Allure
         run: |
           curl -o allure-2.22.1.tgz -OLs https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.13.8/allure-commandline-2.13.8.tgz
-          sudo tar -zxvf allure-2.22.1.tgz -C /opt/
-          sudo ln -s /opt/allure-2.22.1/bin/allure /usr/bin/allure
+          sudo tar -zxvf allure-2.22.1.tgz -C ./temp/
+          sudo ln -s ./temp/allure-2.22.1/bin/allure ./allure
           ls -la
-          /opt/allure-2.22.1/bin/allure --version
+          ./allure --version
           allure --version
       - name: Checkout git repository
         uses: actions/checkout@v3
