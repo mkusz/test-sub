@@ -1,0 +1,1 @@
+{"uuid": "7e243d8a-7d75-4a6d-ac70-ae6fed70f28e", "children": ["ba0249c4-684b-46d0-96ff-d7f1f5ccfbaf"], "befores": [{"name": "Fixture: logger", "status": "passed", "start": 1685632176599, "stop": 1685632176602}], "start": 1685632176599, "stop": 1685632196681}
