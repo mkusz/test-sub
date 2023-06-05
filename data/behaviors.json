@@ -1,1 +1,1 @@
-{"uid":"b1a8273437954620fa374b796ffaacdd","children":[{"name":"Logout","children":[{"name":"Logout","uid":"696a4844a7847525","parentUid":"dcbebd01cb6a8eb469ec948c2c2fe8e9","status":"passed","time":{"start":1685632176603,"stop":1685632196680,"duration":20077},"flaky":false,"newFailed":false,"newPassed":true,"newBroken":false,"retriesCount":2,"retriesStatusChange":true,"parameters":[],"tags":["logout","manual"]}],"uid":"dcbebd01cb6a8eb469ec948c2c2fe8e9"}],"name":"behaviors"}
+{"uid":"b1a8273437954620fa374b796ffaacdd","children":[],"name":"behaviors"}
