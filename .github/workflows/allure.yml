@@ -8,6 +8,10 @@ jobs:
   Allure:
     runs-on: ubuntu-latest
     name: Generate Allure report
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
     steps:
       - name: Install Allure
         run: |
@@ -42,7 +46,7 @@ jobs:
       - name: Commit static site to repository with GitHub Pages enabled
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+          API_TOKEN_GITHUB: ${{ env.GITHUB_TOKEN }}
         with:
           user-name: mkusz
           user-email: 9740637+mkusz@users.noreply.github.com
