@@ -30,7 +30,7 @@ jobs:
           branch-suffix: timestamp
           branch: cleanup
           delete-branch: true
-          title: '[Example] Update report'
+          title: 'Remove used Allure JSON files'
           body: |
             Cleanup repository from used Allure JSON files
           labels: |
@@ -43,6 +43,6 @@ jobs:
       - uses: codytseng/merge-branches-github-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          base: steps.cpr.outputs.pull-request-url
+          base: ${{ steps.cpr.outputs.pull-request-url }}
           target: main
           label-name: cleanup
