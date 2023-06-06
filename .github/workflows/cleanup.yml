@@ -1,0 +1,48 @@
+name: Cleanup
+on:
+  workflow_dispatch:
+  page_build:
+
+jobs:
+  Cleanup:
+    runs-on: ubuntu-latest
+    name: Cleanup main repository
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout git repository
+        uses: actions/checkout@v3
+      - name: Remove used Allure JSON files
+        run: |
+          rm -rf *.json
+      - name: Create Pull Request
+        id: cpr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ env.GITHUB_TOKEN }}
+          commit-message: Cleanup
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch-suffix: timestamp
+          branch: cleanup
+          delete-branch: true
+          title: '[Example] Update report'
+          body: |
+            Cleanup repository from used Allure JSON files
+          labels: |
+            cleanup
+          draft: false
+      - name: Print pull request link
+        if: ${{ steps.cpr.outputs.pull-request-number }}
+        run: |
+          echo "Pull Request URL: ${{ steps.cpr.outputs.pull-request-url }}"
+      - uses: codytseng/merge-branches-github-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: steps.cpr.outputs.pull-request-url
+          target: main
+          label-name: cleanup
