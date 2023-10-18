@@ -1,7 +1,7 @@
 name: Allure
 on:
   workflow_dispatch:
-  pull_request:
+  pull_request_target:
     types:
       - opened
     paths:
@@ -10,21 +10,28 @@ jobs:
   Allure:
     runs-on: ubuntu-latest
     name: Generate Allure report
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     permissions:
       contents: write
     steps:
+      - name: Lock pull request
+        uses: sudo-bot/action-pull-request-lock@v1.1.0
+        with:
+            github-token: ${{ secrets.GITHUB_TOKEN }}
+            number: ${{ github.event.pull_request.number }}
+            lock-reason: resolved
+
       - name: Install Allure
         run: |
           curl -o allure-2.22.1.tgz -OLs https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.22.1/allure-commandline-2.22.1.tgz
           sudo tar -zxvf allure-2.22.1.tgz -C .
           sudo ln -s ./allure-2.22.1/bin/allure ./allure
           ./allure --version
+
       - name: Checkout git repository
         uses: actions/checkout@v3
         with:
           path: report
+
       - name: Get Allure history
         uses: actions/checkout@v3
         if: always()
@@ -32,6 +39,7 @@ jobs:
         with:
           ref: report
           path: docs
+
       - name: Get Allure reports history
         run: cp -R ./docs/history/ ./report/history || echo
       
@@ -41,7 +49,7 @@ jobs:
       - name: Commit static site to repository with GitHub Pages enabled
         uses: cpina/github-action-push-to-another-repository@main
         env:
-          API_TOKEN_GITHUB: ${{ env.GITHUB_TOKEN }}
+          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
         with:
           user-name: mkusz
           user-email: 9740637+mkusz@users.noreply.github.com
@@ -50,8 +58,14 @@ jobs:
           destination-repository-name: test-sub
           target-branch: report
       
-      - name: Close pull request and delete branch without merge to main
-        run: gh pr close --comment "Allure report is generated" --delete-branch "${{ github.event.number }}"
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
+      - name: Close pull request
+        uses: superbrothers/close-pull-request@v3
+        with:
+          comment: "Allure report generated, pull request is closed"
+      
+      - name: Delete current branch
+        uses: dawidd6/action-delete-branch@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          numbers: ${{ github.event.pull_request.number }}
+      
