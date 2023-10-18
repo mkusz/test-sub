@@ -13,13 +13,6 @@ jobs:
     permissions:
       contents: write
     steps:
-      - name: Lock pull request
-        uses: sudo-bot/action-pull-request-lock@v1.1.0
-        with:
-            github-token: ${{ secrets.GITHUB_TOKEN }}
-            number: ${{ github.event.pull_request.number }}
-            lock-reason: resolved
-
       - name: Install Allure
         run: |
           curl -o allure-2.22.1.tgz -OLs https://repo.maven.apache.org/maven2/io/qameta/allure/allure-commandline/2.22.1/allure-commandline-2.22.1.tgz
