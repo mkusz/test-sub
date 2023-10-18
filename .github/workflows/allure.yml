@@ -1,9 +1,11 @@
 name: Allure
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
+  pull_request:
+    types:
+      - opened
+    paths:
+      - '**.json'
 jobs:
   Allure:
     runs-on: ubuntu-latest
@@ -36,13 +38,6 @@ jobs:
       - name: Build Allure reports
         run: ./allure generate ./report -o ./docs --clean
       
-      - name: List files
-        run: |
-          ls -la
-          ls -la ./report
-          ls -la ./report/history
-          ls -la ./docs
-      
       - name: Commit static site to repository with GitHub Pages enabled
         uses: cpina/github-action-push-to-another-repository@main
         env:
@@ -55,20 +50,8 @@ jobs:
           destination-repository-name: test-sub
           target-branch: report
       
-#       - name: Deploy report to Github Pages
-#         if: always()
-#         uses: peaceiris/actions-gh-pages@v2
-#         env:
-#           PERSONAL_TOKEN: ${{ secrets.API_TESTEREMBYC_PL_DEPLOY_TOKEN }}
-#           PUBLISH_BRANCH: report
-#           PUBLISH_DIR: history
-#       - name: Post the link to the report
-#         if: always()
-#         uses: Sibz/github-status-action@v1
-#         with: 
-#             authToken: ${{secrets.GITHUB_TOKEN}}
-#             context: 'Test report'
-#             state: 'success'
-#             sha: ${{ github.event.pull_request.head.sha }}
-#             target_url: github.com/mkusz/test-sub/${{ github.run_number }}
-    
+      - name: Close pull request and delete branch without merge to main
+        run: gh pr close --comment "Allure report is generated" --delete-branch "${{ github.event.number }}"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
