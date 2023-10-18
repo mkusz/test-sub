@@ -12,6 +12,8 @@ jobs:
     name: Generate Allure report
     permissions:
       contents: write
+      issues: write
+      pull-requests: write
     steps:
       - name: Install Allure
         run: |
@@ -51,14 +53,10 @@ jobs:
           destination-repository-name: test-sub
           target-branch: report
       
-      - name: Close pull request
-        uses: superbrothers/close-pull-request@v3
+      - name: Close pull request and delete its branch
+        uses: peter-evans/close-pull@v3
         with:
-          comment: "Allure report generated, pull request is closed"
-      
-      - name: Delete current branch
-        uses: dawidd6/action-delete-branch@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          numbers: ${{ github.event.pull_request.number }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment: Allure report generated.
+          delete-branch: true
       
