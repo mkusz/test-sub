@@ -42,21 +42,16 @@ jobs:
         run: ./allure generate ./report -o ./docs --clean
       
       - name: Commit static site to repository with GitHub Pages enabled
-        uses: cpina/github-action-push-to-another-repository@main
-        env:
-          API_TOKEN_GITHUB: ${{ secrets.GITHUB_TOKEN }}
+        uses: EndBug/add-and-commit@v9
         with:
-          user-name: mkusz
-          user-email: 9740637+mkusz@users.noreply.github.com
-          source-directory: docs
-          destination-github-username: mkusz
-          destination-repository-name: test-sub
-          target-branch: report
+          default_author: github_actions
+          cwd: /docs
+          message: Update Allure report
+          new_branch: report
       
       - name: Close pull request and delete its branch
         uses: peter-evans/close-pull@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
           comment: Allure report generated.
           delete-branch: true
       
