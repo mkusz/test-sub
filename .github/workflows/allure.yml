@@ -22,6 +22,11 @@ jobs:
           sudo ln -s ./allure-2.22.1/bin/allure ./allure
           ./allure --version
       
+      - name: Checkout git repository
+        uses: actions/checkout@v3
+        with:
+          path: "./report/"
+
       - name: Get Allure history
         uses: actions/checkout@v3
         if: always()
@@ -29,11 +34,6 @@ jobs:
         with:
           ref: report
           path: "./docs/"
-
-      - name: Checkout git repository
-        uses: actions/checkout@v3
-        with:
-          path: "./report/"
       
       - name: Check report folder
         run: ls -al ./report/
@@ -45,7 +45,7 @@ jobs:
         run: cp -R ./docs/history/ ./report/history || echo
       
       - name: Build Allure reports
-        run: ./allure generate ./report -o ./docs --clean
+        run: ./allure generate ./report -o ./docs
       
       - name: Check report folder
         run: ls -al ./report/
