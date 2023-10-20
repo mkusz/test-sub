@@ -41,11 +41,19 @@ jobs:
       - name: Check docs folder
         run: ls -al ./docs/
 
-      - name: Get Allure reports history
-        run: cp -R ./docs/history/ ./report/history || echo
+      - name: Get Allure reports history and prepare dirs
+        run: |
+          cp -R ./docs/history/ ./report/history || echo
+          mkdir ./temp
+          cp -R ./report/.git/ ./temp/
       
-      - name: Build Allure reports
-        run: ./allure generate ./report -o ./docs
+      - name: Check docs folder
+        run: ls -al ./temp/
+
+      - name: Build Allure reports and copy .git
+        run: |
+          ./allure generate ./report -o ./docs
+          cp -R ./temp/.git/ ./report/
       
       - name: Check report folder
         run: ls -al ./report/
