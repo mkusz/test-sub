@@ -25,7 +25,7 @@ jobs:
       - name: Checkout git repository
         uses: actions/checkout@v3
         with:
-          path: report
+          path: ./report
 
       - name: Get Allure history
         uses: actions/checkout@v3
@@ -33,7 +33,7 @@ jobs:
         continue-on-error: true
         with:
           ref: report
-          path: docs
+          path: ./docs
 
       - name: Get Allure reports history
         run: cp -R ./docs/history/ ./report/history || echo
