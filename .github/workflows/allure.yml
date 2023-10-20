@@ -45,7 +45,7 @@ jobs:
         run: |
           cp -R ./docs/history/ ./report/history || echo
           mkdir ./temp
-          cp -R ./report/.git/ ./temp/
+          cp -R ./docs/.git/ ./temp/
       
       - name: Check docs folder
         run: ls -al ./temp/
@@ -53,7 +53,7 @@ jobs:
       - name: Build Allure reports and copy .git
         run: |
           ./allure generate ./report -o ./docs --clean
-          sudo cp -R ./temp/.git/ ./report/
+          sudo cp -R ./temp/.git/ ./docs/
       
       - name: Check report folder
         run: ls -al ./report/
