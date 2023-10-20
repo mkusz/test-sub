@@ -53,7 +53,7 @@ jobs:
       - name: Build Allure reports and copy .git
         run: |
           ./allure generate ./report -o ./docs --clean
-          cp -R ./temp/.git/ ./report/
+          sudo cp -R ./temp/.git/ ./report/
       
       - name: Check report folder
         run: ls -al ./report/
