@@ -21,12 +21,7 @@ jobs:
           sudo tar -zxvf allure-2.22.1.tgz -C .
           sudo ln -s ./allure-2.22.1/bin/allure ./allure
           ./allure --version
-
-      - name: Checkout git repository
-        uses: actions/checkout@v3
-        with:
-          path: "./report/"
-
+      
       - name: Get Allure history
         uses: actions/checkout@v3
         if: always()
@@ -34,6 +29,12 @@ jobs:
         with:
           ref: report
           path: "./docs/"
+
+      - name: Checkout git repository
+        uses: actions/checkout@v3
+        with:
+          path: "./report/"
+          sparse-checkout: "*.json"
       
       - name: Check report folder
         run: ls -al ./report/
