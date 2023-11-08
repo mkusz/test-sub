@@ -57,7 +57,10 @@ jobs:
           message: Update Allure report
           push: "origin report --set-upstream --force"
       
+      - name: ls -la
+        run: ls -la && ls -la ./docs/
+
       - name: Close pull request and delete its branch
-        run: gh pr close --comment "Allure report generated (auto closing PR)" --delete-branch ${{ github.event.number }}
+        run: gh pr close --comment "Allure report generated (auto closing PR)" --delete-branch "${{ github.event.number }}"
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
