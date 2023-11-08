@@ -6,6 +6,8 @@ on:
       - opened
     paths:
       - '**.json'
+    branches-ignore:
+      - release/**
 jobs:
   Allure:
     runs-on: ubuntu-latest
@@ -25,33 +27,37 @@ jobs:
       - name: Checkout git repository
         uses: actions/checkout@v3
         with:
-          path: report
-
+          path: './report/'
+    
       - name: Get Allure history
         uses: actions/checkout@v3
         if: always()
         continue-on-error: true
         with:
           ref: report
-          path: docs
+          path: './docs/'
 
-      - name: Get Allure reports history
-        run: cp -R ./docs/history/ ./report/history || echo
-      
+      - name: Get Allure reports history and prepare dirs
+        run: |
+          cp -R ./docs/history/ ./report/history || echo
+          mkdir ./temp
+          cp -R ./docs/.git/ ./temp/
+
       - name: Build Allure reports
-        run: ./allure generate ./report -o ./docs --clean
-      
+        run: |
+          ./allure generate ./report -o ./docs --clean
+          cp -R ./temp/.git/ ./docs/
+
       - name: Commit static site to repository with GitHub Pages enabled
         uses: EndBug/add-and-commit@v9
         with:
           default_author: github_actions
-          cwd: /docs
+          add: "."
+          cwd: "./docs/"
           message: Update Allure report
-          new_branch: report
+          push: "origin report --set-upstream --force"
       
       - name: Close pull request and delete its branch
-        uses: peter-evans/close-pull@v3
-        with:
-          comment: Allure report generated.
-          delete-branch: true
-      
+        run: gh pr close --comment "Allure report generated (auto closing PR)" --delete-branch ${{ github.event.number }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
